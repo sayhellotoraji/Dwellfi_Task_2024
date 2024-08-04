@@ -3,10 +3,10 @@ Drop schema Social_Media_DB;
 Create Database Social_Media_DB;
 USE Social_Media_DB;
 
-CREATE TABLE User (
+CREATE TABLE user (
     id INT NOT NULL,
-    firstName VARCHAR(12) NOT NULL,
-    lastName VARCHAR(12) NOT NULL,
+    first_name VARCHAR(12) NOT NULL,
+    last_name VARCHAR(12) NOT NULL,
     dob DATE NOT NULL,
     sex ENUM('Male', 'Female', 'Transgender') NOT NULL,
     email VARCHAR(50) NOT NULL,
@@ -14,76 +14,76 @@ CREATE TABLE User (
     PRIMARY KEY (id)
 );
 
-INSERT INTO User VALUES(1,'Rajasekar', 'T','1996-11-03','Male','raj@gmail.com','1234'),
+INSERT INTO user VALUES(1,'Rajasekar', 'T','1996-11-03','Male','raj@gmail.com','1234'),
 (2,'Mohan', 'T', '2000-08-03','Male','mohan@gmail.com','2345');
 
 
-CREATE TABLE Post (
+CREATE TABLE post (
     id INT NOT NULL,
-    userId INT NOT NULL,
+    user_id INT NOT NULL,
     content VARCHAR(50) NOT NULL,
     # media field add later 
-    postedDate DATE NOT NULL,
-    postedTime TIME NOT NULL,
+    posted_date DATE NOT NULL,
+    posted_time TIME NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (userId)
-        REFERENCES User (id)
+    FOREIGN KEY (user_id)
+        REFERENCES user (id)
 );
 
-INSERT INTO Post VALUES(1, 1, 'First Post', NOW(), NOW());
+INSERT INTO post VALUES(1, 1, 'First Post', NOW(), NOW());
     
     
-CREATE TABLE Comments (
+CREATE TABLE comments (
     id INT NOT NULL,
-    postId INT NOT NULL,
-    userId INT NOT NULL,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
     content VARCHAR(50) NOT NULL,
-    commentedDate DATE NOT NULL,
-    commentedTime TIME NOT NULL,
+    commented_date DATE NOT NULL,
+    commented_time TIME NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (postId)
-        REFERENCES Post (id),
-    FOREIGN KEY (userId)
-        REFERENCES User (id)
+    FOREIGN KEY (post_id)
+        REFERENCES post (id),
+    FOREIGN KEY (user_id)
+        REFERENCES user (id)
 );
 
-INSERT INTO Comments VALUES(1,1,2, 'Good Start', NOW(), NOW());
+INSERT INTO comments VALUES(1,1,2, 'Good Start', NOW(), NOW());
 
 
-CREATE TABLE Likes (
+CREATE TABLE likes (
     id INT NOT NULL,
-    postId INT NOT NULL,
-    userId INT NOT NULL,
+    post_id INT NOT NULL,
+    user_id INT NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (postId)
-        REFERENCES Post (id),
-    FOREIGN KEY (userId)
-        REFERENCES User (id)
+    FOREIGN KEY (post_id)
+        REFERENCES post (id),
+    FOREIGN KEY (user_id)
+        REFERENCES user (id)
 );
 
-INSERT INTO Likes VALUES(1,1,2);
+INSERT INTO likes VALUES(1,1,2);
 
 
-CREATE TABLE Message (
+CREATE TABLE message (
     id INT NOT NULL,
-    senderId INT NOT NULL,
-    receiverId INT NOT NULL,
+    sender_id INT NOT NULL,
+    receiver_id INT NOT NULL,
     content VARCHAR(50) NOT NULL,
     PRIMARY KEY (id),
-    FOREIGN KEY (senderId)
-        REFERENCES User (id),
-    FOREIGN KEY (receiverId)
-        REFERENCES User (id)
+    FOREIGN KEY (sender_id)
+        REFERENCES user (id),
+    FOREIGN KEY (receiver_id)
+        REFERENCES user (id)
 );
 
-INSERT INTO Message VALUES(1,1,2,'Welcome to the app');
+INSERT INTO message VALUES(1,1,2,'Welcome to the app');
 
 
-SELECT * FROM User;
-SELECT * FROM Post;
-SELECT * FROM Comments;
-SELECT * FROM Likes;
-SELECT * FROM Message;
+SELECT * FROM user;
+SELECT * FROM post;
+SELECT * FROM comments;
+SELECT * FROM likes;
+SELECT * FROM message;
     
 
 
