@@ -86,10 +86,39 @@ SELECT * FROM likes;
 SELECT * FROM message;
     
 
+-- Post Interactions Temp table
+CREATE TEMPORARY TABLE temp_post_interactions AS
+SELECT 
+    p.id AS post_id,
+    p.content AS post_content,
+    p.posted_date,
+    p.posted_time,
+    l.user_id AS liker_id,
+    lu.first_name AS liker_first_name,
+    lu.last_name AS liker_last_name,
+    c.id AS comment_id,
+    c.content AS comment_content,
+    c.commented_date,
+    c.commented_time,
+    cu.id AS commenter_id,
+    cu.first_name AS commenter_first_name,
+    cu.last_name AS commenter_last_name
+FROM 
+    post p
+LEFT JOIN 
+    likes l ON p.id = l.post_id
+LEFT JOIN 
+    user lu ON l.user_id = lu.id
+LEFT JOIN 
+    comments c ON p.id = c.post_id
+LEFT JOIN 
+    user cu ON c.user_id = cu.id
+WHERE 
+    p.id = 1; -- Replace ? with the post id you want to retrieve
+
+SELECT *
+FROM temp_post_interactions;
+
+DROP TEMPORARY TABLE IF EXISTS temp_post_interactions;
 
 
-
-
-
-
-  
